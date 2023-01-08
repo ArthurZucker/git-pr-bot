@@ -23,6 +23,7 @@ def main():
     print(ref)
     pr_num = int(ref.split("/")[-2])
     pr = repo.get_pull(pr_num)
+    print(dir(pr))
     pr.create_comment("### FILL ME OUT ###")
 
 ### A COMMENT
