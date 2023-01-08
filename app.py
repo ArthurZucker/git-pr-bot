@@ -27,6 +27,7 @@ def main():
     pr.create_comment("### FILL ME OUT ###")
 
 ### A COMMENT
+# Another comment
 
 if __name__ == "__main__":
     main()
