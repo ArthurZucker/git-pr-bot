@@ -3,6 +3,7 @@ name: Stale Bot
 on:
   pull_request:
     types: [opened, reopened]
+  push:
   workflow_dispatch:
 
 jobs:
