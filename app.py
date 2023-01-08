@@ -23,7 +23,7 @@ def main():
     ref = os.environ["GITHUB_REF"]
     print(ref)
     pr_num = int(ref.split("/")[-2])
-    pr = repo.get_pull(pr_num)
+    pr = repo.get_pull(pr_num).as_issue()
     pr.create_comment("### FILL ME OUT ###")
 
 ### A COMMENT
