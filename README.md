@@ -250,7 +250,7 @@ The actual output of the model does not necessarily has to be this.
 
 
 # Format of the dataset
-
+One input is a dictionary like the following
 ```json
 [{
     "pr_id" : 180928,
@@ -266,5 +266,5 @@ The actual output of the model does not necessarily has to be this.
         ]
     },
     "raw_diff": """diff --git a/.gitignore b/.gitignore\nindex b6e47617d..3b89c957d 100644\n--- a/.gitignore\n+++ b/.gitignore\n@@ -127,3 +127,6 @@ dmypy.json\n \n # Pyre type checker\n .pyre/\n+\n+# VSCode\n+.vscode\ndiff --git a/README.md b/README.md\nindex 781eea3c9..fcc20a12a 100644\n--- a/README.md\n+++ b/README.md\n@@ -34,7 +34,98 @@\n <p>Run your *raw* PyTorch training script on any kind of device\n </h3>\n \n-🤗 Accelerate provides an easy API to make your scripts run with mixed precision and on any kind of distributed\nsetting (multi-GPUs, TPUs etc.) while still letting you write your own training loop. The same code can then\nruns seamlessly on your local machine for debugging or your training environment.\n+🤗 Accelerate was created for PyTorch users who like to write the training loop of PyTorch models but are\nreluctant to write and maintain the boiler code needed to use multi-GPUs/TPU/fp16.\n+\n+🤗 Accelerate abstracts exactly and only the boiler code related to multi-GPUs/TPU/fp16 and let the rest of\nyour code unchanged.\n+"""
-},
+}
 ]
