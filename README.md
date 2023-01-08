@@ -210,6 +210,8 @@ index dbbfd22f8..88c81e3a0 100644
 
 
 # Output: a full review
+
+The following is what the `POST` request should be made of in order to create an Review.
 ```json
 {
     "body":
@@ -223,6 +225,7 @@ index dbbfd22f8..88c81e3a0 100644
     ]
 }
 ```
+The actual output of the model does not necessarily has to be this.
 
 ## The labels from github
 ```json
@@ -236,3 +239,5 @@ index dbbfd22f8..88c81e3a0 100644
 ```
 - The `context` are all of the `comments` made on the PR. We want to predict them.
 - The `code_coments` are the suggestions
+- The diff is the full PR's diff.
+- We don't need the `id` is not important, while we need the `from_author` just for filtering.
