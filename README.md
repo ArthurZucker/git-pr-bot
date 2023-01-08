@@ -229,12 +229,17 @@ The actual output of the model does not necessarily has to be this.
 
 ## The labels from github
 ```json
-{"diff": 'diff --git a/src/accelerate/utils/modeling.py b/src/accelerate/utils/modeling.py\nindex c58cfeb50..679e57ff2 100644\n--- a/src/accelerate/utils/modeling.py\n+++ b/src/accelerate/utils/modeling.py\n@@ -666,7 +666,7 @@ def load_checkpoint_in_model(\n         elif len(potential_index) == 1:\n             index_filename = os.path.join(checkpoint, potential_index[0])\n         else:\n-            raise ValueError(f"{checkpoint} containing mote than one `.index.json` file, delete the irrelevant ones.")\n+            raise ValueError(f"{checkpoint} containing more than one `.index.json` file, delete the irrelevant ones.")\n     else:\n         raise ValueError(\n             "`checkpoint` should be the path to a file containing a whole state dict, or the index of a sharded "\n',
- "code_comments": [],
- "context": [{'id': 1374301240,
+{
+    "diff": 'diff --git a/src/accelerate/utils/modeling.py b/src/accelerate/utils/modeling.py\nindex c58cfeb50..679e57ff2 100644\n--- a/src/accelerate/utils/modeling.py\n+++ b/src/accelerate/utils/modeling.py\n@@ -666,7 +666,7 @@ def load_checkpoint_in_model(\n         elif len(potential_index) == 1:\n             index_filename = os.path.join(checkpoint, potential_index[0])\n         else:\n-            raise ValueError(f"{checkpoint} containing mote than one `.index.json` file, delete the irrelevant ones.")\n+            raise ValueError(f"{checkpoint} containing more than one `.index.json` file, delete the irrelevant ones.")\n     else:\n         raise ValueError(\n             "`checkpoint` should be the path to a file containing a whole state dict, or the index of a sharded "\n',
+ "code_comments": [
+    {"body": "Might be clearer to have an `else` block here instead of the early `return`.", "diff_hunk": "@@ -529,6 +530,23 @@ def set_deepspeed_weakref(self):\n \n             self.dschf = HfDeepSpeedConfig(ds_config)  # keep this object alive # noqa\n \n+    def is_zero3_init_enabled(self):\n+        return self.zero3_init_flag\n+\n+    @contextmanager\n+    def set_zero3_init(self, enable=False):\n+        old = self.zero3_init_flag\n+        if old == enable:\n+            yield\n+            return\n+        self.zero3_init_flag = enable\n+        self.dschf = None\n+        self.set_deepspeed_weakref()\n+        yield\n+        self.zero3_init_flag = old\n+        self.dschf = None\n+        self.set_deepspeed_weakref()", "from_author": false}, {"body": "Done. ", "diff_hunk": "@@ -529,6 +530,23 @@ def set_deepspeed_weakref(self):\n \n             self.dschf = HfDeepSpeedConfig(ds_config)  # keep this object alive # noqa\n \n+    def is_zero3_init_enabled(self):\n+        return self.zero3_init_flag\n+\n+    @contextmanager\n+    def set_zero3_init(self, enable=False):\n+        old = self.zero3_init_flag\n+        if old == enable:\n+            yield\n+            return\n+        self.zero3_init_flag = enable\n+        self.dschf = None\n+        self.set_deepspeed_weakref()\n+        yield\n+        self.zero3_init_flag = old\n+        self.dschf = None\n+        self.set_deepspeed_weakref()", "from_author": true}
+ ],
+ "context": [
+    {'id': 1374301240,
    'created_at': datetime.datetime(2023, 1, 7, 0, 22, 51),
    'body': '_The documentation is not available anymore as the PR was closed or merged._',
-   'from_author': False}]
+   'from_author': False}
+   ]
 }
 ```
 - The `context` are all of the `comments` made on the PR. We want to predict them.
