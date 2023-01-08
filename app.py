@@ -68,9 +68,9 @@ POST Request :
   repo: 'REPO',
   pull_number: 'PULL_NUMBER',
   commit_id: 'ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091',
-  body: 'This is close to perfect! Please address the suggested inline change.', # main comment of the review 
+  body: 'This is close to perfect! Please address the suggested inline change.', # main comment of the review! (LGTM for lysandre)
   event: 'REQUEST_CHANGES',
-  comments: [
+  comments: [ # list of all the comments and suggestions
     {
       path: 'file.md',
       position: 6,
@@ -79,9 +79,9 @@ POST Request :
   ]
 })
 
-
-
 """
+
+
 # repo = g.get_repo("PyGithub/PyGithub")
 # issue = repo.get_issue(number=874)
 # issue.create_comment("Test")
