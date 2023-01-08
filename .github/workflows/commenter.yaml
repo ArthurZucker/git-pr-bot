@@ -3,13 +3,12 @@ name: Stale Bot
 on:
   pull_request:
     types: [opened, reopened]
-  push:
   workflow_dispatch:
 
 jobs:
   review_pr:
     name: Review Pull Request
-    if: github.repository == 'huggingface/accelerate'
+    # if: github.repository == 'huggingface/accelerate'
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
