@@ -20,7 +20,7 @@ def main():
     g = Github(os.environ["GITHUB_TOKEN"])
     repo = g.get_repo("huggingface/accelerate")
     ref = os.environ["GITHUB_REF"]
-    pr_num = int(ref.split("/")[-2])
+    pr_num = int(ref.split("/")[-1])
     pr = repo.get_pull(pr_num)
     pr.create_comment("### FILL ME OUT ###")
 
