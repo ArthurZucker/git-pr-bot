@@ -246,3 +246,48 @@ The actual output of the model does not necessarily has to be this.
 - The `code_coments` are the suggestions
 - The diff is the full PR's diff.
 - We don't need the `id` is not important, while we need the `from_author` just for filtering.
+
+
+
+# Format of the dataset
+
+```json
+[{
+    "pr_id" : 180928,
+    "label" : {
+        "code_comments": [
+            {
+                "body": "Might be clearer to have an `else` block here instead of the early `return`.", "diff_hunk": "@@ -529,6 +530,23 @@ def set_deepspeed_weakref(self):\n \n             self.dschf = HfDeepSpeedConfig(ds_config)  # keep this object alive # noqa\n \n+    def is_zero3_init_enabled(self):\n+        return self.zero3_init_flag\n+\n+    @contextmanager\n+    def set_zero3_init(self, enable=False):\n+        old = self.zero3_init_flag\n+        if old == enable:\n+            yield\n+            return\n+        self.zero3_init_flag = enable\n+        self.dschf = None\n+        self.set_deepspeed_weakref()\n+        yield\n+        self.zero3_init_flag = old\n+        self.dschf = None\n+        self.set_deepspeed_weakref()"
+            }
+        ],
+        "context": [
+            '_The documentation is not available anymore as the PR was closed or merged._',
+            'This is interesting'
+        ]
+    },
+    "raw_diff": """diff --git a/.gitignore b/.gitignore
+index b6e47617d..3b89c957d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -127,3 +127,6 @@ dmypy.json
+ 
+ # Pyre type checker
+ .pyre/
++
++# VSCode
++.vscode
+diff --git a/README.md b/README.md
+index 781eea3c9..fcc20a12a 100644
+--- a/README.md
++++ b/README.md
+@@ -34,7 +34,98 @@
+ <p>Run your *raw* PyTorch training script on any kind of device
+ </h3>
+ 
+-🤗 Accelerate provides an easy API to make your scripts run with mixed precision and on any kind of distributed setting (multi-GPUs, TPUs etc.) while still letting you write your own training loop. The same code can then runs seamlessly on your local machine for debugging or your training environment.
++🤗 Accelerate was created for PyTorch users who like to write the training loop of PyTorch models but are reluctant to write and maintain the boiler code needed to use multi-GPUs/TPU/fp16.
++
++🤗 Accelerate abstracts exactly and only the boiler code related to multi-GPUs/TPU/fp16 and let the rest of your code unchanged.
++"""
+},
+]
