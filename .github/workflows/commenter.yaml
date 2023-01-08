@@ -1,0 +1,28 @@
+name: Stale Bot
+
+on:
+  pull-request:
+  workflow_dispatch:
+
+jobs:
+  review_pr:
+    name: Review Pull Request
+    if: github.repository == 'huggingface/accelerate'
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REF: ${{ secrets.GITHUB_REF }}
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    
+    - name: Install requirements
+      run: |
+        pip install PyGithub
+    - name: Close stale issues
+      run: |
+        python app.py
